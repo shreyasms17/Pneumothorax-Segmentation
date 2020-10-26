@@ -116,15 +116,16 @@ class SWA(keras.callbacks.Callback):
 
 
 class SnapshotCallbackBuilder:
-    def __init__(self, nb_epochs, nb_snapshots, init_lr=0.1):
+    def __init__(self, nb_epochs, nb_snapshots, checkpoint_path, init_lr=0.1):
         self.T = nb_epochs
         self.M = nb_snapshots
         self.alpha_zero = init_lr
+        self.checkpoint_path = checkpoint_path
 
     def get_callbacks(self, model_prefix='Model'):
         global swa
         callback_list = [
-            callbacks.ModelCheckpoint("./keras.model",monitor='val_my_iou_metric',
+            callbacks.ModelCheckpoint(checkpoint_path,monitor='val_my_iou_metric',
                                    mode = 'max', save_best_only=True, verbose=1),
             swa,
             callbacks.LearningRateScheduler(schedule=self._cosine_anneal_schedule)
