@@ -86,6 +86,26 @@ AUGMENTATIONS_TRAIN, AUGMENTATIONS_TEST = get_albumentations()
 
 
 class AttentionSWAModel():
+    '''
+    This class provides a common functionality for the SWA models.
+
+    model_type represents whether it is a resnet based model / plain unet based model. Hence has only 2 values.
+    epochs = number of epochs the model is to be trained for
+    img_size = size of the image
+    metric_list = a list of metrics to be monitored during the training process
+    augmentations_train = augmentations included for the training set
+    augmentations_test = augmentations included for the test set
+    swa_epoch = epoch number post which stochastic weighted averaging is done
+    train_img_path = path for training images
+    train_mask_path = path for masks of the training images
+    valid_img_path = path for validation images
+    valid_mask_path = path for masks of the validation images
+    snapshots = number of snapshots to be taken throughout the training process
+    loss_func = loss function to be evaluated during training
+    optimizer = optimization algorithm to be used during training
+    init_lr = initial learning rate provided for the model
+
+    '''
     def __init__(self, model_type, epochs, img_size, metric_list, augmentations_train, augmentations_test, swa_epoch, train_img_path, train_mask_path, valid_img_path, valid_mask_path, snapshots, loss_func, optimizer = 'adam', init_lr = 1e-4):
         self.epochs = epochs
         self.model_type = model_type
@@ -132,7 +152,24 @@ class AttentionSWAModel():
 
 
 class AttentionModel():
-    def __init__(self, model_type, epochs, img_size, metric_list, augmentations_train, augmentations_test, train_img_path, train_mask_path, valid_img_path, valid_mask_path, loss_func, optimizer = 'adam', init_lr = 1e-4):
+    '''
+    This class provides a common functionality for the models which do not use SWA.
+
+    model_type represents whether it is a resnet based model / plain unet based model. Hence has only 2 values.
+    epochs = number of epochs the model is to be trained for
+    img_size = size of the image
+    metric_list = a list of metrics to be monitored during the training process
+    augmentations_train = augmentations included for the training set
+    augmentations_test = augmentations included for the test set
+    train_img_path = path for training images
+    train_mask_path = path for masks of the training images
+    valid_img_path = path for validation images
+    valid_mask_path = path for masks of the validation images
+    loss_func = loss function to be evaluated during training
+    init_lr = initial learning rate provided for the model
+
+    '''
+    def __init__(self, model_type, epochs, img_size, metric_list, augmentations_train, augmentations_test, train_img_path, train_mask_path, valid_img_path, valid_mask_path, loss_func, init_lr = 1e-4):
         self.epochs = epochs
         self.model_type = model_type
         self.img_size = img_size
@@ -144,7 +181,6 @@ class AttentionModel():
         self.valid_img_path = valid_img_path
         self.valid_mask_path = valid_mask_path
         self.loss_func = loss_func
-        self.optimizer = optimizer
         self.init_lr = init_lr
         if model_type.lower == 'plain':
             self.model_save_path = 'attunet.h5'
@@ -160,7 +196,7 @@ class AttentionModel():
             seg_model = att_unet(256, 256, 1)
         else:
             seg_model = AttResNet34(input_shape=(256,256,3),encoder_weights=True)
-        seg_model.compile(optimizer=self.optimizer, loss=self.loss_func, metrics=self.metric_list)
+        seg_model.compile(optimizer=Adam(learning_rate=self.init_lr), loss=self.loss_func, metrics=self.metric_list)
         checkpoint = ModelCheckpoint('../output/checkpoint/' + self.model_checkpoint_path, monitor='val_my_iou_metric', verbose=1, save_best_only=True, mode='max', save_weights_only = True)
         reduceLROnPlat = ReduceLROnPlateau(monitor='val_loss', factor=factor, patience=patience, verbose=verbose, mode=mode, min_delta=min_delta, cooldown=cooldown, min_lr=min_lr)
         callbacks_list = [checkpoint, reduceLROnPlat]
