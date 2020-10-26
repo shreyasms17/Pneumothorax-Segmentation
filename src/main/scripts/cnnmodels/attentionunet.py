@@ -1,5 +1,5 @@
 import sys
-sys.path.append("")
+sys.path.append("../helper/")
 
 from keras.layers import Conv2D, MaxPooling2D, UpSampling2D, BatchNormalization, Reshape, Permute, Activation, Input, Add, Multiply, Concatenate, Dropout, Lambda
 from keras.models import Model

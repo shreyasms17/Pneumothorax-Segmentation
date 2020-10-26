@@ -1,5 +1,5 @@
 import sys
-sys.path.append("")
+sys.path.append("../helper/")
 
 import keras
 from keras import Model
