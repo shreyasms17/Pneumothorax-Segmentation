@@ -82,7 +82,7 @@ val_im_path,val_mask_path = '../../resources/keras_im_val','../../resources/kera
 h,w,batch_size = 256,256,16
 epochs = 132
 
-AUGMENTATIONS_TRAIN, AUGMENTATIONS_TEST = get_albumentations()
+AUGMENTATIONS_TRAIN, AUGMENTATIONS_TEST = get_augmentations_train(), get_augmentations_test()
 
 
 class AttentionSWAModel():
@@ -126,8 +126,8 @@ class AttentionSWAModel():
             self.model_save_path = 'attunet_swa.h5'
             self.swa_checkpoint_path = 'keras_attunet_swa.model'
         else:
-            self.model_save_path = 'attresnet_swa.h5'
-            self.swa_checkpoint_path = 'keras_attresnet_swa.model'
+            self.model_save_path = 'attresnet34_swa.h5'
+            self.swa_checkpoint_path = 'keras_attresnet34_swa.model'
 
 
     def train_model():
