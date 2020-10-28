@@ -18,7 +18,7 @@ keras | 2.3.1
 #####TEST IMAGE#####
 ![Test image](https://github.com/shreyasms17/Pneumothorax-Segmentation/tree/main/src/resources/input/test_img1.png)
 
-####PREDICTTION####
+#####PREDICTTION#####
 ![Prediction](https://github.com/shreyasms17/Pneumothorax-Segmentation/tree/main/src/resources/saved_output/result.jpeg)
 
 
