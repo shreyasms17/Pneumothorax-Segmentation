@@ -4,7 +4,7 @@
 Pneumothorax is a medical condition in which there is an air leak between the chest wall and lungs. It is diagnosed by radiologists and it’s confirmation is a tedious task. Semantic image segmentation carried out using the Attention UNet and the Attention UNet + ResNet34 models, is used to detect pneumothorax in the radiological images, hence providing non-radiologists with confident results. Additionally, the difference in performance with conventional ways of training the models is analyzed and compared with contemporary methodologies used like snapshot callbacks and stochastic weighting average. The motivation for our approach is that the incorporation of the modish approach provides an upper hand when the model learns thereby enabling it to achieve greater performances than conventional approach and can provide an early diagnosis of pneumothoraces.
 
 
-#### REQUIREMENTS
+### REQUIREMENTS
 The dataset was obtained from [SIIM-ACR Pneumothorax Segmentation](https://www.kaggle.com/c/siim-acr-pneumothorax-segmentation) competition.
 The masks, train set and test set were unzipped (https://www.kaggle.com/iafoss/data-repack-and-image-statistics) and used as input.
 These zip files were ultimately split into respective training and validation sets. Refer this file `src/resources/input/extraction.py`.
@@ -21,14 +21,16 @@ tensorflow | 2.1.0
 keras | 2.3.1
 
 
-##### TEST IMAGE
+### TEST IMAGE
 ![Test image](src/resources/input/test_img1.png)
 
-##### PREDICTION
+
+
+### PREDICTION
 ![Prediction](src/resources/saved_output/result.jpeg)
 
 
-#### SCORES OBTAINED
+### SCORES OBTAINED
 Model | Private Score | Public Score
 ----- | ------------- | ------------
 Attention UNet | 0.7729 | 0.6498
